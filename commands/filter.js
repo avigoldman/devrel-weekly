@@ -83,7 +83,23 @@ exports.handler = parseArgv(async ({
   const notes = await filterNotesStream(stream, filter)
   spinner = maybeLog(() => spinner.stopAndPersist())
 
-  const output = outputFormat === 'csv' ? jsonToCsv(notes) : JSON.stringify(notes, null, 2)  
+  const allTags = _.uniq(_.flatMap(notes, 'tags'))
+  const notesWithTagColumns = _.map(notes, (note) => {
+    // add tags with a prefix to an object that w
+    const tagsColumns = _.mapValues(
+      _.keyBy(allTags, (tag) => `tag-${tag}`),
+      (tag) => note.tags.includes(tag) ? tag : ''
+    )
+
+    return {
+      ..._.omit(note, ['tags']),
+      ...tagsColumns
+    }
+  })
+
+  console.log(allTags)
+
+  const output = outputFormat === 'csv' ? jsonToCsv(notesWithTagColumns) : JSON.stringify(notes, null, 2)  
 
   if (outputFile) {
     maybeLog(`  - Writing output to ${outputFile}`)
