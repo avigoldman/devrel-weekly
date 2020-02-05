@@ -16,9 +16,14 @@ Now you should be able to use the command line tool.
 
 The following command will write a table to `output.csv` with the tag analysis excluding the "archive tag" for the last quarter in 2019.
 
+
 ```
 devrel-weekly analyze my-file.enex --exclude "archive" --from "2019-09-01" --to "2019-12-31" --output "output.csv"
 ```
+
+Note: Replace `my-file.enex` with the name of the .enex file you've exported from Evernote. Before running the command, make sure to `cd` into the folder where the exported file exists.
+
+WARNING: Be sure to rename your output file before running your next command in order to not overwrite the previous data.
 
 ## Commands
 
@@ -51,4 +56,3 @@ You can pipe the output to jq by not specifying an output file and setting the f
 ```
 devrel-weekly filter my-file.enex --exclude "archive" --format "json" | jq '.[0]'
 ```
-
