@@ -17,7 +17,7 @@ Now you should be able to use the command line tool.
 The following command will write a table to `output.csv` with the tag analysis excluding the "archive tag" for the last quarter in 2019.
 
 ```
-devrel-weekly analyze README.enex --exclude "archive" --from "2019-09-01" --to "2019-12-31" --output "output.csv"
+devrel-weekly analyze my-file.enex --exclude "archive" --from "2019-09-01" --to "2019-12-31" --output "output.csv"
 ```
 
 ## Commands
