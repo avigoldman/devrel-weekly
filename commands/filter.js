@@ -98,8 +98,6 @@ exports.handler = parseArgv(async ({
     }
   })
 
-  console.log(allTags)
-
   const output = outputFormat === 'csv' ? jsonToCsv(notesWithTagColumns) : JSON.stringify(notes, null, 2)  
 
   if (outputFile) {
