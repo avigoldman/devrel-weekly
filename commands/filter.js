@@ -83,6 +83,7 @@ exports.handler = parseArgv(async ({
   const notes = await filterNotesStream(stream, filter)
   spinner = maybeLog(() => spinner.stopAndPersist())
 
+  /** Add each tag as it's own column */
   const allTags = _.uniq(_.flatMap(notes, 'tags'))
   const notesWithTagColumns = _.map(notes, (note) => {
     // add tags with a prefix to an object that w
