@@ -9,7 +9,7 @@ Here's how to get this set up
 Run the following command:
 
 ```sh
-npm install -g https://github.com/Me/my_module
+npm install -g https://github.com/avigoldman/devrel-weekly.git
 ```
 
 Now you should be able to use the command line tool.
