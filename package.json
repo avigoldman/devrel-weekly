@@ -14,7 +14,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^3.0.0",
     "date-fns": "^2.9.0",
     "json2csv": "^4.5.4",
     "lodash": "^4.17.15",
