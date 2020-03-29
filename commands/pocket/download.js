@@ -10,7 +10,7 @@ const axios = require('axios')
 const open = require('open');
 
 
-function formatDate(date, f) {
+function formatDateUTC(date, f) {
   return format(addMinutes(date, date.getTimezoneOffset()), f);
 }
 
@@ -101,7 +101,7 @@ exports.handler = parseArgv(async ({
       sourceUrl: row.given_url,
       title: row.given_title,
       tags: _.map(row.tags, 'tag'),
-      date: formatDate(new Date(row.time_added * 1000), 'yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'')
+      date: formatDateUTC(new Date(row.time_added * 1000), 'yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'')
     }
   })
 
