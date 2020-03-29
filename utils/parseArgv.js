@@ -22,6 +22,7 @@ module.exports = (fn) => (argv) => {
     title: argv.title ? argv.title : null,
     outputFile: argv.output ? argv.output : null,
     outputFormat: argv.format,
+    ...argv
   })
 }
 
