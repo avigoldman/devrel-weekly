@@ -31,8 +31,8 @@ There are four commands in the CLI:
 
 * `analyze [enex-file]` - analyze tag usage grouped by month
 * `filter [enex-file]` - filter documents by tag, date, and title
-* `pocket download` - download pocket all archive data
-* `pocket analyze [csv-file]` - analyze tag usage grouped by month from pocket archive data
+* `pocket-download` - download pocket all archive data
+* `pocket-analyze [csv-file]` - analyze tag usage grouped by month from pocket archive data
 
 They share the same options:
 * `--from` - Start date (YYYY-MM-DD) for when the note was created created 
