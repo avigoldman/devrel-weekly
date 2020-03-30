@@ -14,7 +14,7 @@ function formatDateUTC(date, f) {
   return format(addMinutes(date, date.getTimezoneOffset()), f);
 }
 
-exports.command = 'pocket download'
+exports.command = 'pocket-download'
 exports.describe = 'download pocket all archive data'
 exports.builder = (yargs) => {
   yargs

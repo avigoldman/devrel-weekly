@@ -11,7 +11,7 @@ const analyzeNotes = require('../../utils/analyzeNotes')
 const filterNotesStream = require('../../utils/filterNotesStream')
 const resolve = require('../../utils/resolve')
 
-exports.command = 'pocket analyze [file]'
+exports.command = 'pocket-analyze [file]'
 exports.describe = 'analyze tag usage grouped by month from pocket archive data'
 exports.builder = require('../filter').builder
 
