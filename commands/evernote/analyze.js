@@ -2,7 +2,6 @@ const fs = require("fs");
 const _ = require("lodash");
 const formatDate = require("date-fns/format");
 const { parse: jsonToCsv } = require("json2csv");
-const csvToJson = require("csvtojson");
 const ora = require("ora");
 
 const parseArgv = require("../../utils/parseArgv");
@@ -11,10 +10,9 @@ const analyzeNotes = require("../../utils/analyzeNotes");
 const filterNotesStream = require("../../utils/filterNotesStream");
 const resolve = require("../../utils/resolve");
 
-exports.command = "pocket-analyze [file]";
-exports.describe =
-  "analyze tag usage grouped by month from pocket archive data";
-exports.builder = require("../evernote/filter").builder;
+exports.command = "evernote-analyze [file]";
+exports.describe = "analyze tag usage grouped by month from evernote export";
+exports.builder = require("./filter").builder; // same options
 
 exports.handler = parseArgv(
   async ({
@@ -29,9 +27,9 @@ exports.handler = parseArgv(
     /** a function to log output if we have an output file – otherwise we don't log to not dirty the output */
     const maybeLog = (msg) =>
       outputFile ? (_.isFunction(msg) ? msg() : console.log(msg)) : null;
-    maybeLog(`  - Reading ${inputFile}`);
+    maybeLog(`  - Streaming ${inputFile}`);
 
-    const fileContent = fs.readFileSync(resolve(inputFile), "utf8");
+    const stream = fs.createReadStream(resolve(inputFile));
     const filter = generateFilter({
       fromDate,
       toDate,
@@ -39,28 +37,14 @@ exports.handler = parseArgv(
       excludeTags,
     });
 
-    let spinner = ora("- Filtering rows");
+    let spinner = ora("- Filtering notes");
     spinner = maybeLog(() => spinner.start());
 
-    const rows = (await csvToJson().fromString(fileContent)).map((row) => {
-      const allTags = _.filter(_.keys(row), (key) => key.startsWith("tag-"));
-
-      return {
-        title: row.title,
-        tags: _.map(
-          _.filter(allTags, (tag) => row[tag] !== ""),
-          (tag) => tag.replace(/^tag-/, "")
-        ),
-        date: new Date(row.date),
-        sourceUrl: row.sourceUrl,
-      };
-    });
-
-    const filteredRows = rows.filter(filter);
+    const notes = await filterNotesStream(stream, filter);
     spinner = maybeLog(() => spinner.stopAndPersist());
 
-    maybeLog(`  - Analyzing ${filteredRows.length} rows`);
-    const table = analyzeNotes(rows);
+    maybeLog(`  - Analyzing ${notes.length} notes`);
+    const table = analyzeNotes(notes);
     const output =
       outputFormat === "csv"
         ? jsonToCsv(table, { header: false })
