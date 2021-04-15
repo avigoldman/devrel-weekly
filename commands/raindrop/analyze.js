@@ -56,13 +56,8 @@ exports.handler = parseArgv(
       };
     });
 
-    console.log(rows.length);
-
     const filteredRows = rows.filter(filter);
 
-    console.log(filteredRows.length);
-
-    return;
     spinner = maybeLog(() => spinner.stopAndPersist());
 
     maybeLog(`  - Analyzing ${filteredRows.length} rows`);
