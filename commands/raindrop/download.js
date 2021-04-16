@@ -8,6 +8,7 @@ const resolve = require("../../utils/resolve");
 const ora = require("ora");
 const axios = require("axios");
 const open = require("open");
+const { ta } = require("date-fns/locale");
 
 function formatDateUTC(date, f) {
   return format(addMinutes(date, date.getTimezoneOffset()), f);
@@ -51,7 +52,7 @@ exports.handler = parseArgv(
       return {
         sourceUrl: row.link,
         title: row.title,
-        tags: row.tags,
+        tags: row.tags.map((tag) => tag.toLowerCase()),
         date: formatDateUTC(
           new Date(row.created),
           "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
