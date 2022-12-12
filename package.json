@@ -17,7 +17,7 @@
     "axios": "^0.19.2",
     "csvtojson": "^2.0.10",
     "date-fns": "^2.9.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "json2csv": "^4.5.4",
     "lodash": "^4.17.15",
     "open": "^7.0.3",
